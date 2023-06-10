@@ -24,8 +24,11 @@ builder.Services.AddDbContext<ColourContext>(options =>
     //options
     //.UseSqlServer(ConnString);
     //Data Source = localhost,1434; Initial Catalog = TestDB; Persist Security Info = True; User ID = SA
+    //options
+    //.UseSqlServer($"Server={server},{port};Initial Catalog={database};TrustServerCertificate=True; User ID={user};Password={password}");
+
     options
-    .UseSqlServer($"Server={server},{port};Initial Catalog={database};TrustServerCertificate=True; User ID={user};Password={password}");
+    .UseSqlServer($"Server={server}\\ms-sql-server-1,{port};Initial Catalog={database};TrustServerCertificate=True; User ID={user};Password={password}");
 });
 
 var app = builder.Build();
