@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using WeatherAPI.Models;
 
 namespace WeatherAPI.Controllers;
 
@@ -6,27 +9,46 @@ namespace WeatherAPI.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
+    private readonly ColourContext _context;
+    private readonly ILogger<WeatherForecastController> _logger;
+
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, ColourContext context)
+    {
+        _context = context;
+        _logger = logger;
+    }
     private static readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly ILogger<WeatherForecastController> _logger;
+    //[HttpGet(Name = "GetWeatherForecast")]
+    //public IEnumerable<WeatherForecast> Get()
+    //{
+    //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+    //    {
+    //        Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+    //        TemperatureC = Random.Shared.Next(-20, 55),
+    //        Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+    //    })
+    //    .ToArray();
+    //}
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
-    {
-        _logger = logger;
-    }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet(Name = "GetColourList")]
+    public IEnumerable<Models.Colour> GetColourList()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        try
         {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+            DbSet<Colour> list = _context.Colour;
+            return list.ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.Log(LogLevel.Error, ex.Message);
+            return new List<Colour> { new Colour
+                { Id = 1, ColourName = ex.Message } };
+        }
+
     }
 }

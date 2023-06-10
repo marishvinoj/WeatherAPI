@@ -6,6 +6,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["*.csproj", "."]
+COPY ["aspnetappwithsql.pfx", "/https/aspnetappwithsql.pfx"]
+RUN update-ca-certificates
 RUN dotnet restore "./WeatherAPI.csproj"
 COPY . .
 WORKDIR "/src/."

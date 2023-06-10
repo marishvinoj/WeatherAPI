@@ -1,0 +1,37 @@
+If dotnet dev-certs https --clean not working.
+
+Open Run and open mmc.exe
+Inside MMC from File menu click on Add/Remove Snap-in.
+In the add/remove snap-in window, find certificates in available snap-ins and add it to the selected
+Pick User account
+In the console root -> Certificates Current User -> Personal click on Certificates
+You will see the list of issued and installed certificates for the current user. DON’T remove or change any certificates you don’t know, only remove certificates related to self-sign localhost ASP.NET Core.
+
+docker exec -it weatherapi-ms-sql-server-1 "bash"
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Test@12345#"
+create database TestDB
+CREATE TABLE Colour (Id INT, ColourName NVARCHAR(50));
+
+docker-compose up
+
+dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetappwithsql.pfx -p "pa55word!"
+dotnet dev-certs https --trust
+
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_Kestrel__Certificates__Default__Password="pa55word!" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetappwithsql.pfx -v %USERPROFILE%\.aspnet\https:/https/ mcr.microsoft.com/dotnet/weatherapi-dockercrud:latest
+
+
+docker-compose up
+SELECT name FROM master.dbo.sysdatabases
+GO 
+docker network ls
+docker network inspect 2ccbef6f7020
+
+
+
+
+
+
+
+
+
+
