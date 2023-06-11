@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using WeatherAPI.Models;
@@ -41,8 +42,16 @@ public class WeatherForecastController : ControllerBase
         try
         {
             DbSet<Colour> list = _context.Colour;
+            //string connetionString;
+            //SqlConnection cnn;
+            //connetionString = ;
+            //cnn = new SqlConnection(connetionString);
+            //cnn.Open();
+
+            //cnn.Close();
+            //return new List<Colour> { new Colour { Id = 1, ColourName= "Success" } };
             return list.ToList();
-        }
+        }       
         catch (Exception ex)
         {
             _logger.Log(LogLevel.Error, ex.Message);

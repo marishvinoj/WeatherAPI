@@ -11,6 +11,8 @@ docker exec -it weatherapi-ms-sql-server-1 "bash"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Test@12345#"
 create database TestDB
 CREATE TABLE Colour (Id INT, ColourName NVARCHAR(50));
+insert into Colour(Id, ColourName) values(1,'Blue')
+select * from Colour
 
 docker-compose up
 

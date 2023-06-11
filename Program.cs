@@ -24,11 +24,15 @@ builder.Services.AddDbContext<ColourContext>(options =>
     //options
     //.UseSqlServer(ConnString);
     //Data Source = localhost,1434; Initial Catalog = TestDB; Persist Security Info = True; User ID = SA
+    //.UseSqlServer(ConnString);
+    //Data Source = localhost,1434; Initial Catalog = TestDB; TrustServerCertificate=True; User ID = SA;Password=Test@12345#
     //options
     //.UseSqlServer($"Server={server},{port};Initial Catalog={database};TrustServerCertificate=True; User ID={user};Password={password}");
 
-    options
-    .UseSqlServer($"Server={server}\\ms-sql-server-1,{port};Initial Catalog={database};TrustServerCertificate=True; User ID={user};Password={password}");
+    //options
+    //.UseSqlServer($"Server={server},{port};Initial Catalog={database};TrustServerCertificate=True; User ID={user};Password={password}");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DBContext"), builder => builder.EnableRetryOnFailure());
+    
 });
 
 var app = builder.Build();
@@ -40,7 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
